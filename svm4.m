@@ -4,12 +4,7 @@ clear all;
 setup;
 tic
 
-%valfrac 0.8
 %errorrate 0.101092202184404
-
-
-%valfrac 0.9
-%errorrate 0.034554537885096
 
 % Call{1}=[0.00001 0.00005 0.0001 0.0005 0.001];
 % Call{2}=[0.00001 0.00005 0.0001 0.0005 0.001];
@@ -23,15 +18,7 @@ tic
 % Call{10}=[1 2 3 4 5 6 7 8 9 10];
 
 
-%valfrac 0.8
 %errorrate 0.046815834767642
-
-%valfrac 0.9
-%errorrate 0.013098649201801
-
-%max it 1000000
-%valfrac 0.9
-%errorrate 0.001165501165501
 
 Call{1}=[0.00001 0.0001 0.001 0.01 0.1 1 10 100];
 Call{2}=[0.00001 0.0001 0.001 0.01 0.1 1 10 100];
@@ -64,7 +51,7 @@ bestmodel=zeros(2,10);
 testscore=zeros(size(testlabels,2),10);
 for i=1:10
     fprintf('For number=%i \n',(i-1));
-    [W,b,~]= cross_validate_svm1(traincell{i}.Xpos,traincell{i}.Xneg,Call{i},0.9);
+    [W,b,~]= cross_validate_svm2(traincell{i}.Xpos,traincell{i}.Xneg,Call{i},0.9);
     %bestmodel(:,i)=[W;b];
     
     score=W'*testfeature+b;
