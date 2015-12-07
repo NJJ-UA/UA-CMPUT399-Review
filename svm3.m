@@ -72,10 +72,10 @@ for i=1:10
    
 end
 [M,I]=max(testscore,[],2);
-good=M>0;
+
 I= bsxfun(@minus,I ,1);
 
 I=I';
 
-errorrate=sum(sign(abs(I(good)-testlabels(good))))/size(testlabels(good),2);
+errorrate=sum(sign(abs(I-testlabels(good))))/size(testlabels,2);
 toc

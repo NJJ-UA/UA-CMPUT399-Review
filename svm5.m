@@ -4,10 +4,10 @@ clear all;
 setup;
 tic
 
+%0.031700000000000
 
 
-
-load('svmdatahog.mat');
+load('svmdatarp.mat');
 
 testfeature=testfeature';
 trainfeature=trainfeature';
@@ -19,8 +19,8 @@ SVMModels = cell(10,1);
 for i = 1:10;
     tic
     index = trainlabels==(i-1);
-    SVMModels{i} = fitcsvm(trainfeature,index,'ClassNames',logical([0,1]),'Standardize',true,...
-        'KernelFunction','rbf','BoxConstraint',1,'IterationLimit',1000);
+    SVMModels{i} = fitcsvm(trainfeature,index,'Standardize',true,...
+        'KernelFunction','rbf','KernelScale','auto');
     toc
 end
 
@@ -31,11 +31,9 @@ for i = 1:10;
 end
 
 [~,maxScore] = max(Scores,[],2);
-% [M,I]=max(testscore,[],2);
-% good=M>0;
-% I= bsxfun(@minus,I ,1);
-% 
-% I=I';
-% 
-% errorrate=sum(sign(abs(I(good)-testlabels(good))))/size(testlabels(good),2);
+I=maxScore-1;
+
+I=I';
+
+errorrate=sum(sign(abs(I-testlabels)))/size(testlabels,2);
 toc

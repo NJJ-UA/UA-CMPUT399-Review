@@ -1,7 +1,8 @@
 function ev = cross_validate_svm(X,y,crange,n)
 [~,ksize]=size(crange);
 ev=zeros(ksize,1);
-for c=crange
+for j=1:ksize
+    c=crange(j);
     error=0;
     for i=1:n
         fprintf('Start cross validate svm for c=%d,fold %d\n', c,i);
@@ -16,5 +17,5 @@ for c=crange
         errorrate=sum(sign(abs(yip-yi)))/size(yi,2); 
         error=error+errorrate;
     end
-    ev(c)=error/n;
+    ev(j)=error/n;
 end

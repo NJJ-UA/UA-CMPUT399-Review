@@ -3,11 +3,16 @@ clear all;
 
 %svmdata1.mat
 %C 10
-%error 0.429100000000000
+
 %errorrate 0.124800000000000
 tic
 
-load('svmdata2.mat');
+
+%svmdatarp.mat
+%C 10
+
+%errorrate 0.124800000000000
+load('svmdatahog.mat');
 
 
 %svmdata2.mat
@@ -20,7 +25,7 @@ for i=0:9
     indice=(trainlabels==i);
     
     labels=bsxfun(@minus,indice.*2,1);
-    C=10;
+    C=1;
     [w, bias] = trainLinearSVM(trainfeature,labels, C);
     Aw(:,i+1)=w;
     Abias(i+1)=bias;

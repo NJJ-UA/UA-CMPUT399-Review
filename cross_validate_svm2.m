@@ -1,6 +1,6 @@
 function [W,b,c] = cross_validate_svm1(Xpos,Xneg,Call,trainpercent)
 
-maxIter=1000;
+maxIter=1e6;
 
 
 npos=size(Xpos,2);
@@ -33,7 +33,7 @@ for i=1:length(Call)
   C=Call(i);
 
   
-  [W,b] = vl_svmtrain(double(Xtrain), ytrain,C,'MaxNumIterations',maxIter);
+  [W,b] = vl_svmtrain(double(Xtrain), ytrain,C,'MaxNumIterations',maxIter,'Solver', 'SGD');
   score=W'*Xval+b;
   accval= mean((score>0)*2-1==yval);
   
@@ -49,8 +49,10 @@ end
 
 m=max(acc(1,:));
 acc=acc(:,acc(1,:)==m);
-[~,m]=max(acc(2,:));
-c=acc(3,m);
+m=max(acc(2,:));
+acc=acc(:,acc(2,:)==m);
+
+c=acc(3,1);
 fprintf('Best C=%1.5f\n',c);
 [W,b] = vl_svmtrain(double([Xpos Xneg]), [ypos yneg],c,'MaxNumIterations',maxIter);
 
